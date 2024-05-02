@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dilution Volume Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-align: center;
+  }
+  h2 {
+    color: #333;
+  }
+  label {
+    margin-right: 10px;
+  }
+  input[type="number"], input[type="text"], input[type="submit"], input[type="reset"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+  }
+  input[type="submit"], input[type="reset"] {
+    width: 150px;
+  }
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  input[type="reset"] {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .container {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .note {
+    color: #777;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Dilution Volume Calculator</h2>
+  <p class="note">Use this calculator to determine the volume of a solution needed to achieve a desired concentration.</p>
+  <form id="dilutionVolumeCalculator">
+    <label for="initialConcentration">Initial Concentration (w/v):</label>
+    <input type="text" id="initialConcentration" name="initialConcentration" placeholder="Enter initial concentration (e.g., 1/80)" required><br>
+    
+    <label for="finalVolume">Final Volume (mL):</label>
+    <input type="number" id="finalVolume" name="finalVolume" min="0" step="any" placeholder="Enter final volume" required><br>
+
+    <label for="percentageStrength">Percentage Strength (%):</label>
+    <input type="number" id="percentageStrength" name="percentageStrength" min="0" step="any" placeholder="Enter percentage strength" required><br>
+    
+    <div id="result"></div>
+    
+    <input type="submit" value="Calculate">
+    <input type="reset" value="Reset">
+  </form>
+  <p class="note">Note: 0.02% means 0.02 gram in 100ml, and 1/80 means 1 gram in 80ml.</p>
+</div>
+
+<script>
+document.getElementById('dilutionVolumeCalculator').addEventListener('submit', function(event) {
+  event.preventDefault();
+  var initialConcentrationInput = document.getElementById('initialConcentration').value;
+  var initialConcentrationArray = initialConcentrationInput.split('/');
+  var initialConcentration = parseFloat(initialConcentrationArray[0]) / parseFloat(initialConcentrationArray[1]);
+  var finalVolume = parseFloat(document.getElementById('finalVolume').value);
+  var percentageStrength = parseFloat(document.getElementById('percentageStrength').value);
+  var resultContainer = document.getElementById('result');
+  
+  // Calculate the volume needed
+  var volumeNeeded = (percentageStrength / (initialConcentration / 100)) * (finalVolume / 10000);
+  
+  resultContainer.innerHTML = 'The volume needed is ' + volumeNeeded.toFixed(2) + ' mL.';
+});
+</script>
+</body>
+</html>
